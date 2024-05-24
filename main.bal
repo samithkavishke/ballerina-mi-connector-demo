@@ -1,10 +1,25 @@
 import ballerinax/mi;
 
+const map<float> gradePoints = {
+        "A+": 4.0,
+        "A": 4.0,
+        "A-": 3.7,
+        "B+": 3.3,
+        "B": 3.0,
+        "B-": 2.7,
+        "C+": 2.3,
+        "C": 2.0,
+        "C-": 1.7,
+        "D+": 1.3,
+        "D": 1.0,
+        "F": 0.0
+    };
+
 @mi:ConnectorInfo {}
-public function weightedMean(xml results, xml weights) returns xml {
+public function weightedMean(xml marks, xml weights) returns xml {
 
     // Extract values from the XMLs
-    map<float> resultMap = extractValues(results);
+    map<float> resultMap = extractValues(marks);
     map<float> weightMap = extractValues(weights);
 
     // Calculate weighted mean
@@ -90,20 +105,7 @@ function generateGrades(xml rawMarks) returns xml {
 }
 
 function setGrades(xml grades) returns map<float> {
-    map<float> gradePoints = {
-        "A+": 4.0,
-        "A": 4.0,
-        "A-": 3.7,
-        "B+": 3.3,
-        "B": 3.0,
-        "B-": 2.7,
-        "C+": 2.3,
-        "C": 2.0,
-        "C-": 1.7,
-        "D+": 1.3,
-        "D": 1.0,
-        "F": 0.0
-    };
+
     map<float> gradeMap = {};
     foreach var item in grades.children() {
         if (item is xml:Element) {
