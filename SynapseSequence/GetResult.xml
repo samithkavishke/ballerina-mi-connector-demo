@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/getresults" name="GetResults" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST">
+        <inSequence>
+            <property name="weights" scope="default">
+                <credits xmlns="">
+                    <fluidDynamics>2</fluidDynamics>
+                    <computerScience>3</computerScience>
+                    <mechanics>2</mechanics>
+                    <mathematics>3</mathematics>
+                    <materialScience>2</materialScience>
+                    <electromagnetics>2</electromagnetics>
+                </credits>
+            </property>
+            <resultcalculator.GPA>
+                <Result>gpa</Result>
+                <rawMarks>{$body/*}</rawMarks>
+                <credits>{$ctx:weights}</credits>
+            </resultcalculator.GPA>
+            <resultcalculator.weightedMean>
+                <Result>wmean</Result>
+                <marks>{$body/*}</marks>
+                <weights>{$ctx:weights}</weights>
+            </resultcalculator.weightedMean>
+            <payloadFactory media-type="xml">
+                <format>
+                    <result>
+                        <weightedMean xmlns="">$1</weightedMean>
+                        <gpa xmlns="">$2</gpa>
+                    </result>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="$ctx:wmean"/>
+                    <arg evaluator="xml" expression="$ctx:gpa"/>
+                </args>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

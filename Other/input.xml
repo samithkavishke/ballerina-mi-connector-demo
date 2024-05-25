@@ -1,0 +1,8 @@
+<student xmlns="">
+    <fluidDynamics>60</fluidDynamics>
+    <computerScience>40</computerScience>
+    <mechanics>31</mechanics>
+    <mathematics>45</mathematics>
+    <materialScience>70</materialScience>
+    <electromagnetics>40</electromagnetics>
+</student>
